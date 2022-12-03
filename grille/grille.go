@@ -58,20 +58,47 @@ func (g *Grille) placerBateau() {
 
 //affiche la grille
 func (g *Grille) AfficherGrille() {
+	//afficher les cases
+	// _ : case vide
+	// X : case touchée
+	// T : bateau touché
+	// C : bateau coulé
+	// | : séparateur de colonne
+
+	//afficher les numéros de colonne
+	fmt.Print("   ")
 	for i := 0; i < 10; i++ {
+		fmt.Print(i, " ")
+	}
+	fmt.Println()
+	
+	for i := 0; i < 10; i++ {
+		fmt.Print(i, " |")
 		for j := 0; j < 10; j++ {
 			if g.cases[i][j].estTouchee {
 				if g.cases[i][j].estBateau {
-					fmt.Print("X ")
+					if g.cases[i][j].estCoule {
+						fmt.Print("C")
+					} else {
+						fmt.Print("T")
+					}
 				} else {
-					fmt.Print("O ")
+					fmt.Print("X")
 				}
 			} else {
-				fmt.Print(". ")
+				fmt.Print("_")
 			}
+			fmt.Print("|")
 		}
-		fmt.Println()
+		fmt.Println("",i)
 	}
+
+	//afficher les numéros de colonne
+	fmt.Print("   ")
+	for i := 0; i < 10; i++ {
+		fmt.Print(i, " ")
+	}
+	
 }
 
 //tire sur une case de la grille

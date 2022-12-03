@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"BatailleNavale/grille"
+	"math/rand"
 )
 
 func helloHandler(w http.ResponseWriter, req *http.Request) {
@@ -27,8 +28,16 @@ func main() {
 
 		//on demande au joueur de tirer
 		var x, y int
+
+		
 		fmt.Print("Entrez les coordonnées de la case à tirer (x,y) (0 à 9) : ")
-		fmt.Scan(&x, &y)
+		/* fmt.Scan(&x, &y) */
+		
+		//simulation de saisie d'un joueur
+		x = rand.Intn(10)
+		y = rand.Intn(10)
+
+
 
 		//on tire
 		if g.Tirer(x, y) {
@@ -47,9 +56,9 @@ func main() {
 	g.AfficherGrille()
 	fmt.Println("Partie terminée !")
 
-
+/* 
 	
 	http.HandleFunc("/", helloHandler)
 	http.ListenAndServe(":9000", nil)
-
+ */
 }
