@@ -1,43 +1,32 @@
 package main
 
 import (
-	"fmt"
-	"net/http"
 	"BatailleNavale/grille"
+	"fmt"
 	"math/rand"
 )
 
-func helloHandler(w http.ResponseWriter, req *http.Request) {
-	switch req.Method {
-	case http.MethodGet:
-		fmt.Fprintf(w, "Hello")
-	case http.MethodPost:
-	}
-}
-
 func main() {
+	fmt.Print("\033[H\033[2J")
 
 	//initialisation de la grille
 	var g grille.Grille
 	g.InitGrille()
 
 	//boucle de jeu
-	for !g.EstTerminee() {
+	for !g.PartieTerminee() {
 		//affichage de la grille
 		g.AfficherGrille()
 
 		//on demande au joueur de tirer
 		var x, y int
 
-		
-		fmt.Print("Entrez les coordonnées de la case à tirer (x,y) (0 à 9) : ")
-		/* fmt.Scan(&x, &y) */
-		
 		//simulation de saisie d'un joueur
 		x = rand.Intn(10)
 		y = rand.Intn(10)
 
-
+		fmt.Print("Entrez les coordonnées de la case à tirer (x,y) (0 à 9) : ")
+		fmt.Scan(&x, &y)
 
 		//on tire
 		if g.Tirer(x, y) {
@@ -45,7 +34,7 @@ func main() {
 			if g.EstCoule(x, y) {
 				fmt.Println("Coulé !")
 			}
-			fmt.Println("Il vous reste", g.CompterBateaux(), "bateaux à couler")
+			fmt.Println("Il vous reste", g.NbBateauxRestants(), "bateaux à couler")
 
 		} else {
 			fmt.Println("Raté !")
@@ -55,10 +44,4 @@ func main() {
 	//affichage de la grille
 	g.AfficherGrille()
 	fmt.Println("Partie terminée !")
-
-/* 
-	
-	http.HandleFunc("/", helloHandler)
-	http.ListenAndServe(":9000", nil)
- */
 }
