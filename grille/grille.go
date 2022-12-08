@@ -9,8 +9,9 @@ import (
 
 // Représente la grille de jeu
 type Grille struct {
-	grille    [10][10]Case //grille de jeu
-	nbBateaux int          //nombre de bateaux
+	grille         [10][10]Case //grille de jeu
+	nbBateaux      int          //nombre de bateaux
+	nbBateauxCoule int          //nombre de bateaux coulés
 }
 
 // Représente une case de la grille
@@ -36,6 +37,7 @@ func (g *Grille) InitGrille() {
 
 	//on initialise le nombre de bateaux
 	g.nbBateaux = 5
+	g.nbBateauxCoule = 0
 
 	//on initialise les bateaux
 	for i := 0; i < g.nbBateaux; i++ {
@@ -117,7 +119,7 @@ func (g *Grille) AfficherGrille() {
 		//afficher les cases
 		for j := 0; j < 10; j++ {
 			if !g.grille[i][j].estTouche {
-				if g.grille[i][j].estBateau {
+				if !g.grille[i][j].estBateau {
 					if g.EstCoule(i, j) {
 						fmt.Print("C | ")
 					} else {
@@ -183,27 +185,16 @@ func (g *Grille) EstCoule(x int, y int) bool {
 		}
 	}
 
+	g.nbBateauxCoule = g.nbBateauxCoule + 1
+	fmt.Print("Un bateau a été coulé !")
 	//on retourne true si toutes les cases du bateau sont touchées
 	return true
 }
 
 // Compte le nombre de bateaux restants
 func (g *Grille) NbBateauxRestants() int {
-
-	nbBateauxRestants := 0
-
-	//on compte le nombre de bateaux restants
-	for i := 0; i < 10; i++ {
-		for j := 0; j < 10; j++ {
-			if g.grille[i][j].estBateau && !g.EstCoule(i, j) {
-				nbBateauxRestants++
-			}
-		}
-	}
-
-	//on retourne le nombre de bateaux restants
-	return nbBateauxRestants
-
+	fmt.Print(g.nbBateaux, g.nbBateauxCoule)
+	return g.nbBateaux - g.nbBateauxCoule
 }
 
 // Vérifie si la partie est terminée
