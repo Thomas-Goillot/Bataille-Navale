@@ -8,6 +8,7 @@ import (
 // class Bateau : représente un bateau
 type Bateau struct {
 	//position du bateau
+	Id     int
 	XDebut int
 	YDebut int
 	XFin   int
@@ -20,6 +21,9 @@ func (b *Bateau) InitBateau() {
 
 	//initialisation du générateur de nombres aléatoires
 	rand.Seed(time.Now().UnixNano())
+
+	//On choisit un id aléatoire unique pour chaque bateau
+	b.Id = rand.Intn(1000)
 
 	//on choisit une position aléatoire
 	b.XDebut = rand.Intn(10)
@@ -47,4 +51,10 @@ func (b *Bateau) InitBateau() {
 		b.XFin = b.XDebut - Taille
 		b.YFin = b.YDebut
 	}
+
+	//On vérifie que le bateau est bien dans la grille et ne passe pas par les bords de la grille
+	if b.XDebut < 0 || b.XDebut > 9 || b.YDebut < 0 || b.YDebut > 9 || b.XFin < 0 || b.XFin > 9 || b.YFin < 0 || b.YFin > 9 {
+		b.InitBateau()
+	}
+
 }

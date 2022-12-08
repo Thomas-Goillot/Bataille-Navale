@@ -9,9 +9,8 @@ import (
 
 // Représente la grille de jeu
 type Grille struct {
-	grille         [10][10]Case //grille de jeu
-	nbBateaux      int          //nombre de bateaux
-	nbBateauxCoule int          //nombre de bateaux coulés
+	grille    [10][10]Case //grille de jeu
+	nbBateaux int          //nombre de bateaux
 }
 
 // Représente une case de la grille
@@ -37,7 +36,6 @@ func (g *Grille) InitGrille() {
 
 	//on initialise le nombre de bateaux
 	g.nbBateaux = 5
-	g.nbBateauxCoule = 0
 
 	//on initialise les bateaux
 	for i := 0; i < g.nbBateaux; i++ {
@@ -95,6 +93,39 @@ func (g *Grille) Chevauche(XDebut int, YDebut int, XFin int, YFin int) bool {
 	return false
 }
 
+func (g *Grille) AfficheCordBateau() {
+
+	//get all the boat in the grid and take it just one time using unique id of the boat
+	var tabBateau [5]bateau.Bateau
+	var idBateau [5]int
+	var nbBateau int = 0
+	for i := 0; i < 10; i++ {
+		for j := 0; j < 10; j++ {
+			if g.grille[i][j].estBateau {
+				var bateau = g.grille[i][j].bateau
+				var id = bateau.Id
+				var isUnique = true
+				for k := 0; k < nbBateau; k++ {
+					if idBateau[k] == id {
+						isUnique = false
+					}
+				}
+				if isUnique {
+					tabBateau[nbBateau] = bateau
+					idBateau[nbBateau] = id
+					nbBateau++
+				}
+			}
+		}
+	}
+
+	//display the coordinates of the boats
+	for i := 0; i < 5; i++ {
+		fmt.Println(tabBateau[i].Id, " : ", tabBateau[i].XDebut, tabBateau[i].YDebut, tabBateau[i].XFin, tabBateau[i].YFin)
+	}
+
+}
+
 // Affiche la grille
 func (g *Grille) AfficherGrille() {
 	//afficher les cases
@@ -118,8 +149,8 @@ func (g *Grille) AfficherGrille() {
 
 		//afficher les cases
 		for j := 0; j < 10; j++ {
-			if !g.grille[i][j].estTouche {
-				if !g.grille[i][j].estBateau {
+			if g.grille[i][j].estTouche {
+				if g.grille[i][j].estBateau {
 					if g.EstCoule(i, j) {
 						fmt.Print("C | ")
 					} else {
@@ -147,7 +178,6 @@ func (g *Grille) AfficherGrille() {
 	}
 	fmt.Println()
 
-	fmt.Print("Nombre de bateaux restants : ", g.NbBateauxRestants())
 	fmt.Println()
 	fmt.Println()
 }
@@ -185,16 +215,16 @@ func (g *Grille) EstCoule(x int, y int) bool {
 		}
 	}
 
-	g.nbBateauxCoule = g.nbBateauxCoule + 1
-	fmt.Print("Un bateau a été coulé !")
+	//on décrémente le nombre de bateaux restants
+	g.nbBateaux -= 1
+
 	//on retourne true si toutes les cases du bateau sont touchées
 	return true
 }
 
 // Compte le nombre de bateaux restants
 func (g *Grille) NbBateauxRestants() int {
-	fmt.Print(g.nbBateaux, g.nbBateauxCoule)
-	return g.nbBateaux - g.nbBateauxCoule
+	return g.nbBateaux
 }
 
 // Vérifie si la partie est terminée

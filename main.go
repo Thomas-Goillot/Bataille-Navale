@@ -13,6 +13,9 @@ func main() {
 	var g grille.Grille
 	g.InitGrille()
 
+	//affiche les coordonnées des bateaux dans la grille
+	g.AfficheCordBateau()
+
 	//boucle de jeu
 	for !g.PartieTerminee() {
 		//affichage de la grille
