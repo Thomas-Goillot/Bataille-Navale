@@ -13,11 +13,12 @@ func main() {
 	var g grille.Grille
 	g.InitGrille()
 
-	//affiche les coordonnées des bateaux dans la grille
-	g.AfficheCordBateau()
-
 	//boucle de jeu
 	for !g.PartieTerminee() {
+
+		//affiche les coordonnées des bateaux dans la grille
+		g.AfficheCordBateau()
+
 		//affichage de la grille
 		g.AfficherGrille()
 
@@ -36,6 +37,7 @@ func main() {
 			fmt.Println("Touché !")
 			if g.EstCoule(x, y) {
 				fmt.Println("Coulé !")
+				g.RetirerBateau()
 			}
 			fmt.Println("Il vous reste", g.NbBateauxRestants(), "bateaux à couler")
 

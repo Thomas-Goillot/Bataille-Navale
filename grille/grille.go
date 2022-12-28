@@ -208,18 +208,20 @@ func (g *Grille) EstCoule(x int, y int) bool {
 
 	//on vérifie que toutes les cases du bateau sont touchées
 	for i := b.XDebut; i <= b.XFin; i++ {
-		for j := b.XDebut; j <= b.YFin; j++ {
+		for j := b.YDebut; j <= b.YFin; j++ {
 			if !g.grille[i][j].estTouche {
 				return false
 			}
 		}
 	}
 
-	//on décrémente le nombre de bateaux restants
-	g.nbBateaux -= 1
-
 	//on retourne true si toutes les cases du bateau sont touchées
 	return true
+}
+
+// function qui retire 1 au nombre de bateau restant
+func (g *Grille) RetirerBateau() {
+	g.nbBateaux--
 }
 
 // Compte le nombre de bateaux restants

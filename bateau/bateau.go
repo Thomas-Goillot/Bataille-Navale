@@ -33,7 +33,7 @@ func (b *Bateau) InitBateau() {
 	direction := rand.Intn(4)
 
 	//on choisit une Taille aléatoire
-	Taille := rand.Intn(4) + 2
+	Taille := rand.Intn(4) + 1
 	b.Taille = Taille
 
 	//on initialise la position de fin du bateau
