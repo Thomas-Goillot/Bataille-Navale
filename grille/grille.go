@@ -126,62 +126,6 @@ func (g *Grille) AfficheCordBateau() {
 
 }
 
-// Affiche la grille
-func (g *Grille) AfficherGrille() {
-	//afficher les cases
-	// _ : case vide
-	// X : case touchée
-	// T : bateau touché
-	// C : bateau coulé
-	// | : séparateur de colonne
-
-	//afficher les numéros de colonne
-	fmt.Print("    ")
-	for i := 0; i < 10; i++ {
-		fmt.Print(i, "   ")
-	}
-	fmt.Println()
-
-	//afficher les cases
-	for i := 0; i < 10; i++ {
-		//afficher le numéro de ligne
-		fmt.Print(i, " | ")
-
-		//afficher les cases
-		for j := 0; j < 10; j++ {
-			if g.grille[i][j].estTouche {
-				if g.grille[i][j].estBateau {
-					if g.EstCoule(i, j) {
-						fmt.Print("C | ")
-					} else {
-						fmt.Print("T | ")
-					}
-				} else {
-					fmt.Print("X | ")
-				}
-			} else {
-				fmt.Print("_ | ")
-			}
-		}
-
-		//afficher le numéro de ligne
-		fmt.Print(i)
-
-		//passer à la ligne
-		fmt.Println()
-	}
-
-	//afficher les numéros de colonne
-	fmt.Print("    ")
-	for i := 0; i < 10; i++ {
-		fmt.Print(i, "   ")
-	}
-	fmt.Println()
-
-	fmt.Println()
-	fmt.Println()
-}
-
 // Tire sur une case
 func (g *Grille) Tirer(x int, y int) bool {
 	//on vérifie que la case n'a pas déjà été touchée
