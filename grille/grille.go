@@ -121,7 +121,7 @@ func (g *Grille) AfficheCordBateau() {
 
 	//display the coordinates of the boats
 	for i := 0; i < 5; i++ {
-		fmt.Println(tabBateau[i].Id, " : ", tabBateau[i].XDebut, tabBateau[i].YDebut, tabBateau[i].XFin, tabBateau[i].YFin)
+		fmt.Println(tabBateau[i].Id, " : ", tabBateau[i].XDebut, tabBateau[i].YDebut, ",", tabBateau[i].XFin, tabBateau[i].YFin)
 	}
 
 }
